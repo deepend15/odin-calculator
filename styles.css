@@ -27,9 +27,6 @@ body {
 
 .display-container {
     flex: 1;
-}
-
-.display-container {
     display: flex;
     align-items: flex-end;
     justify-content: end;
@@ -37,7 +34,7 @@ body {
 }
 
 .display-text {
-    font-size:32px;
+    font-size: 32px;
 }
 
 .input {
