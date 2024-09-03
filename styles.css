@@ -12,13 +12,84 @@ body {
     display: flex;
     margin: 0;
     justify-content: center;
+    font-family: Arial, Verdana, sans-serif;
 }
 
 .calc-container {
     display: flex;
+    flex-direction: column;
     margin-top: 75px;
     border: 3px solid black;
     border-radius: 8px;
     width: 400px;
     height: 500px;
+}
+
+.display-container {
+    flex: 1;
+}
+
+.display-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: end;
+    padding: 15px;
+}
+
+.display-text {
+    font-size:32px;
+}
+
+.input {
+    display: flex;
+    align-items: flex-start;
+    padding: 5px;
+}
+
+input {
+    font-size: 32px;
+    min-width: 0px;
+    text-align: right;
+}
+
+.button-container {
+    flex: 4;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.first-line,
+.line,
+.last-line {
+    flex: 1;
+    display: flex;
+}
+
+.first-line {
+    justify-content: flex-end;
+}
+
+.line {
+    justify-content: space-between;
+}
+
+.left-buttons,
+.right-buttons {
+    display: flex;
+}
+
+.last-line {
+    justify-content: space-between;
+}
+
+.right-buttons {
+    gap: 8.4px;
+}
+
+button {
+    width: 85px;
+    height: auto;
+    font-size: 24px;
 }
