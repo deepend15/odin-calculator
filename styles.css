@@ -35,6 +35,8 @@ body {
 
 .display-text {
     font-size: 32px;
+    max-width: 395.2px;
+    overflow: hidden;
 }
 
 .button-container {
@@ -70,11 +72,11 @@ body {
 }
 
 .right-buttons {
-    gap: 8.4px;
+    gap: 7.067px;
 }
 
 button {
-    width: 85px;
+    width: 86px;
     height: auto;
     font-size: 24px;
 }
