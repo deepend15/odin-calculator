@@ -30,23 +30,11 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: end;
-    padding: 15px;
+    padding: 0px 15px 15px 15px;
 }
 
 .display-text {
     font-size: 32px;
-}
-
-.input {
-    display: flex;
-    align-items: flex-start;
-    padding: 5px;
-}
-
-input {
-    font-size: 32px;
-    min-width: 0px;
-    text-align: right;
 }
 
 .button-container {
@@ -54,7 +42,7 @@ input {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .first-line,
