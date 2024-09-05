@@ -14,11 +14,11 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
-let num1 = Number();
+let num1;
 let operator;
-let num2 = Number();
+let num2;
 
-function operate(operator, num1, num2) {
+function operate(num1, operator, num2) {
     if (operator === '+') {
         return add(num1, num2);
     } else if (operator === '-') {
@@ -31,20 +31,36 @@ function operate(operator, num1, num2) {
 }
 
 const acButton = document.querySelector(".ac-button");
+
 const numberButtons = document.querySelectorAll(".number-button");
-const divideButton = document.querySelector(".divide-button");
-const timesButton = document.querySelector(".times-button");
-const minusButton = document.querySelector(".minus-button");
-const equalsButton = document.querySelector(".equals-button");
-const plusButton = document.querySelector(".plus-button");
+const operatorButtons = document.querySelectorAll(".operator-button");
 
 let displayNumberArray = [];
 let displayValue = 0;
+let expression = {};
 
 function populateDisplay(e) {
     const displayText = document.querySelector(".display-text");
+    let operatorButtonsArray = Array.from(operatorButtons);
+    let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
     if (displayText.textContent === "0" && e.target.textContent === "0") {
         return;
+    } else if (activatedOperators[0] !== undefined) {
+        for (const btn of operatorButtons) {
+            btn.classList.remove("activated");
+        };
+        displayNumberArray = [];
+        displayNumberArray.push(e.target.textContent);
+        let displayNumberString = displayNumberArray.join("");
+        displayText.textContent = displayNumberString;
+        displayValue = Number(displayNumberString);
+    } else if (expression.secondNumber !== undefined) {
+        expression = {};
+        displayNumberArray = [];
+        displayNumberArray.push(e.target.textContent);
+        let displayNumberString = displayNumberArray.join("");
+        displayText.textContent = displayNumberString;
+        displayValue = Number(displayNumberString);
     } else {
         displayNumberArray.push(e.target.textContent);
         let displayNumberString = displayNumberArray.join("");
@@ -56,3 +72,41 @@ function populateDisplay(e) {
 numberButtons.forEach((button) => {
     button.addEventListener("click", populateDisplay);
 }); 
+
+function callOperator(e) {
+    num1 = displayValue;
+    switch (e.target.textContent) {
+        case "+":
+            operator = "+";
+            break;
+        case "−":
+            operator = "-";
+            break;
+        case "×":
+            operator = "*";
+            break;
+        case "÷":
+            operator = "/";
+            break;
+    }
+    e.target.classList.add("activated");
+    expression.firstNumber = num1;
+    expression.operator = operator;
+}
+
+operatorButtons.forEach((button) => {
+    button.addEventListener("click", callOperator);
+});
+
+const equalsButton = document.querySelector(".equals-button");
+
+function callEquals() {
+    num2 = displayValue;
+    expression.secondNumber = num2;
+    let solution = operate(expression.firstNumber, expression.operator, expression.secondNumber);
+    const displayText = document.querySelector(".display-text");
+    displayText.textContent = solution.toString();
+    displayValue = solution;
+}
+
+equalsButton.addEventListener("click", callEquals);
