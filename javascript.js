@@ -101,10 +101,15 @@ const equalsButton = document.querySelector(".equals-button");
 function callEquals() {
     num2 = displayValue;
     expression.secondNumber = num2;
-    let solution = operate(expression.firstNumber, expression.operator, expression.secondNumber);
-    const displayText = document.querySelector(".display-text");
-    displayText.textContent = solution.toString();
-    displayValue = solution;
+    if (expression.operator === "/" && expression.secondNumber === 0) {
+        const displayText = document.querySelector(".display-text");
+        displayText.textContent = "Err: cannot divide by 0";
+    } else {
+        let solution = operate(expression.firstNumber, expression.operator, expression.secondNumber);
+        const displayText = document.querySelector(".display-text");
+        displayText.textContent = solution.toString();
+        displayValue = solution;
+    }
 }
 
 equalsButton.addEventListener("click", callEquals);
