@@ -19,14 +19,19 @@ let operator;
 let num2;
 
 function operate(num1, operator, num2) {
-    if (operator === '+') {
-        return add(num1, num2);
-    } else if (operator === '-') {
-        return subtract(num1, num2);
-    } else if (operator === '*') {
-        return multiply(num1, num2);
-    } else if (operator === '/') {
-        return divide(num1, num2);
+    switch (operator) {
+        case "+":
+            return add(num1, num2);
+            break;
+        case "-":
+            return subtract(num1, num2);
+            break;
+        case "*":
+            return multiply(num1, num2);
+            break;
+        case "/":
+            return divide(num1, num2);
+            break;
     }
 }
 
