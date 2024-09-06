@@ -30,8 +30,6 @@ function operate(num1, operator, num2) {
     }
 }
 
-const acButton = document.querySelector(".ac-button");
-
 const numberButtons = document.querySelectorAll(".number-button");
 const operatorButtons = document.querySelectorAll(".operator-button");
 
@@ -110,3 +108,18 @@ function callEquals() {
 }
 
 equalsButton.addEventListener("click", callEquals);
+
+const acButton = document.querySelector(".ac-button");
+
+function callAC() {
+    displayNumberArray = [];
+    expression = {};
+    displayNumber = 0;
+    for (const btn of operatorButtons) {
+        btn.classList.remove("activated");
+    };
+    const displayText = document.querySelector(".display-text");
+    displayText.textContent = "0";
+}
+
+acButton.addEventListener("click", callAC);
