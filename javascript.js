@@ -131,16 +131,26 @@ operatorButtons.forEach((button) => {
 const equalsButton = document.querySelector(".equals-button");
 
 function callEquals() {
-    equalsButton.classList.add("activated");
-    num2 = displayValue;
-    expression.secondNumber = num2;
-    const displayText = document.querySelector(".display-text");
-    if (expression.operator === "/" && expression.secondNumber === 0) {
-        displayText.textContent = "Err: cannot divide by 0";
-    } else {
+    if (expression.firstNumber === undefined && expression.secondNumber === undefined) {
+        return;
+    } else if (equalsButton.className === "equals-button activated") {
+        expression.firstNumber = displayValue;
+        const displayText = document.querySelector(".display-text");
         let solution = operate(expression.firstNumber, expression.operator, expression.secondNumber);
         displayText.textContent = solution.toString();
         displayValue = solution;
+    } else {
+        equalsButton.classList.add("activated");
+        num2 = displayValue;
+        expression.secondNumber = num2;
+        const displayText = document.querySelector(".display-text");
+        if (expression.operator === "/" && expression.secondNumber === 0) {
+            displayText.textContent = "Err: cannot divide by 0";
+        } else {
+            let solution = operate(expression.firstNumber, expression.operator, expression.secondNumber);
+            displayText.textContent = solution.toString();
+            displayValue = solution;
+        }
     }
 }
 
