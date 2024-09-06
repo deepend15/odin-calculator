@@ -56,7 +56,7 @@ let displayNumberArray = [];
 let displayValue = 0;
 let expression = {};
 
-function populateDisplay(e) {
+function selectNumber(e) {
     const displayText = document.querySelector(".display-text");
     let operatorButtonsArray = Array.from(operatorButtons);
     let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
@@ -88,10 +88,10 @@ function populateDisplay(e) {
 }
 
 numberButtons.forEach((button) => {
-    button.addEventListener("click", populateDisplay);
+    button.addEventListener("click", selectNumber);
 }); 
 
-function callOperator(e) {
+function selectOperator(e) {
     if (equalsButton.className === "equals-button activated") {
         equalsButton.classList.remove("activated");
     } else if (expression.firstNumber !== undefined && expression.operator !== undefined) {
@@ -127,10 +127,10 @@ function callOperator(e) {
 }
 
 operatorButtons.forEach((button) => {
-    button.addEventListener("click", callOperator);
+    button.addEventListener("click", selectOperator);
 });
 
-function callEquals() {
+function selectEquals() {
     if (expression.firstNumber === undefined && expression.secondNumber === undefined) {
         return;
     } else if (equalsButton.className === "equals-button activated") {
@@ -154,11 +154,11 @@ function callEquals() {
     }
 }
 
-equalsButton.addEventListener("click", callEquals);
+equalsButton.addEventListener("click", selectEquals);
 
 const acButton = document.querySelector(".ac-button");
 
-function callAC() {
+function selectAC() {
     displayNumberArray = [];
     expression = {};
     displayValue = 0;
@@ -170,4 +170,4 @@ function callAC() {
     displayText.textContent = "0";
 }
 
-acButton.addEventListener("click", callAC);
+acButton.addEventListener("click", selectAC);
