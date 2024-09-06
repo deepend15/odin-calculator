@@ -1,17 +1,30 @@
+function roundNumber(num, scale) {
+    if(!("" + num).includes("e")) {
+      return +(Math.round(num + "e+" + scale)  + "e-" + scale);
+    } else {
+      var arr = ("" + num).split("e");
+      var sig = ""
+      if(+arr[1] + scale > 0) {
+        sig = "+";
+      }
+      return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + scale)) + "e-" + scale);
+    }
+}
+
 function add(num1, num2) {
-    return num1 + num2;
+    return roundNumber(num1 + num2, 15);
 }
 
 function subtract(num1, num2) {
-    return num1 - num2;
+    return roundNumber(num1 - num2, 15);
 }
 
 function multiply(num1, num2) {
-    return num1 * num2;
+    return roundNumber(num1 * num2, 15);
 }
 
 function divide(num1, num2) {
-    return num1 / num2;
+    return roundNumber(num1 / num2, 15);
 }
 
 let num1;
