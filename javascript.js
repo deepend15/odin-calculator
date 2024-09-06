@@ -50,6 +50,7 @@ function operate(num1, operator, num2) {
 
 const numberButtons = document.querySelectorAll(".number-button");
 const operatorButtons = document.querySelectorAll(".operator-button");
+const equalsButton = document.querySelector(".equals-button");
 
 let displayNumberArray = [];
 let displayValue = 0;
@@ -70,7 +71,8 @@ function populateDisplay(e) {
         let displayNumberString = displayNumberArray.join("");
         displayText.textContent = displayNumberString;
         displayValue = Number(displayNumberString);
-    } else if (expression.secondNumber !== undefined) {
+    } else if (equalsButton.className === "equals-button activated") {
+        equalsButton.classList.remove("activated");
         expression = {};
         displayNumberArray = [];
         displayNumberArray.push(e.target.textContent);
@@ -127,8 +129,6 @@ function callOperator(e) {
 operatorButtons.forEach((button) => {
     button.addEventListener("click", callOperator);
 });
-
-const equalsButton = document.querySelector(".equals-button");
 
 function callEquals() {
     if (expression.firstNumber === undefined && expression.secondNumber === undefined) {
