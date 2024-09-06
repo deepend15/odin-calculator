@@ -114,7 +114,7 @@ const acButton = document.querySelector(".ac-button");
 function callAC() {
     displayNumberArray = [];
     expression = {};
-    displayNumber = 0;
+    displayValue = 0;
     for (const btn of operatorButtons) {
         btn.classList.remove("activated");
     };
