@@ -90,6 +90,20 @@ numberButtons.forEach((button) => {
 }); 
 
 function callOperator(e) {
+    if (equalsButton.className === "equals-button activated") {
+        equalsButton.classList.remove("activated");
+    } else if (expression.firstNumber !== undefined && expression.operator !== undefined) {
+        num2 = displayValue;
+        expression.secondNumber = num2;
+        const displayText = document.querySelector(".display-text");
+        if (expression.operator === "/" && expression.secondNumber === 0) {
+            displayText.textContent = "Err: cannot divide by 0";
+        } else {
+            let solution = operate(expression.firstNumber, expression.operator, expression.secondNumber);
+            displayText.textContent = solution.toString();
+            displayValue = solution;
+        }
+    }
     num1 = displayValue;
     switch (e.target.textContent) {
         case "+":
@@ -117,6 +131,7 @@ operatorButtons.forEach((button) => {
 const equalsButton = document.querySelector(".equals-button");
 
 function callEquals() {
+    equalsButton.classList.add("activated");
     num2 = displayValue;
     expression.secondNumber = num2;
     const displayText = document.querySelector(".display-text");
@@ -140,6 +155,7 @@ function callAC() {
     for (const btn of operatorButtons) {
         btn.classList.remove("activated");
     };
+    equalsButton.classList.remove("activated");
     const displayText = document.querySelector(".display-text");
     displayText.textContent = "0";
 }
