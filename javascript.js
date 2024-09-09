@@ -51,6 +51,7 @@ function operate(num1, operator, num2) {
 const numberButtons = document.querySelectorAll(".number-button");
 const operatorButtons = document.querySelectorAll(".operator-button");
 const equalsButton = document.querySelector(".equals-button");
+const decimalButton = document.querySelector(".decimal-button");
 
 let displayNumberArray = [];
 let displayValue = 0;
@@ -165,24 +166,6 @@ function selectEquals() {
 
 equalsButton.addEventListener("click", selectEquals);
 
-const acButton = document.querySelector(".ac-button");
-
-function selectAC() {
-    displayNumberArray = [];
-    expression = {};
-    displayValue = 0;
-    const buttons = document.querySelectorAll("button");
-    for (const btn of buttons) {
-        btn.classList.remove("activated");
-    }; 
-    const displayText = document.querySelector(".display-text");
-    displayText.textContent = "0";
-}
-
-acButton.addEventListener("click", selectAC);
-
-const decimalButton = document.querySelector(".decimal-button");
-
 function selectDecimal() {
     const displayText = document.querySelector(".display-text");
     let operatorButtonsArray = Array.from(operatorButtons);
@@ -208,3 +191,54 @@ function selectDecimal() {
 }
 
 decimalButton.addEventListener("click", selectDecimal);
+
+const acButton = document.querySelector(".ac-button");
+
+function selectAC() {
+    displayNumberArray = [];
+    expression = {};
+    displayValue = 0;
+    const buttons = document.querySelectorAll("button");
+    for (const btn of buttons) {
+        btn.classList.remove("activated");
+    }; 
+    const displayText = document.querySelector(".display-text");
+    displayText.textContent = "0";
+}
+
+acButton.addEventListener("click", selectAC);
+
+const backspaceButton = document.querySelector(".backspace-button");
+
+function selectBackspace() {
+    const displayText = document.querySelector(".display-text");
+    let operatorButtonsArray = Array.from(operatorButtons);
+    let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
+    if (displayText.textContent === "0" || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
+        return;
+    } else if (displayNumberArray.length === 1) {
+        displayNumberArray = [];
+        displayText.textContent = "0";
+        displayValue = 0;
+    } else if (displayNumberArray[displayNumberArray.length - 1] === ".") {
+        if (displayNumberArray[0] === "0") {
+            decimalButton.classList.remove("activated");
+            displayNumberArray = [];
+            displayText.textContent = "0";
+            displayValue = 0;
+        } else {
+            displayNumberArray.pop();
+            decimalButton.classList.remove("activated");
+            let displayNumberString = displayNumberArray.join("");
+            displayText.textContent = displayNumberString;
+            displayValue = Number(displayNumberString);
+        }
+    } else {
+        displayNumberArray.pop();
+        let displayNumberString = displayNumberArray.join("");
+        displayText.textContent = displayNumberString;
+        displayValue = Number(displayNumberString);
+    }    
+}
+
+backspaceButton.addEventListener("click", selectBackspace);

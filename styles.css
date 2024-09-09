@@ -55,6 +55,7 @@ body {
 
 .first-line {
     justify-content: flex-end;
+    gap: 7.067px;
 }
 
 .line {
