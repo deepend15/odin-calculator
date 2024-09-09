@@ -95,6 +95,9 @@ function selectOperator(e) {
     if (equalsButton.className === "equals-button activated") {
         equalsButton.classList.remove("activated");
     } else if (expression.firstNumber !== undefined && expression.operator !== undefined) {
+        if (decimalButton.className === "decimal-button activated") {
+            decimalButton.classList.remove("activated");
+        };
         num2 = displayValue;
         expression.secondNumber = num2;
         const displayText = document.querySelector(".display-text");
@@ -106,6 +109,9 @@ function selectOperator(e) {
             displayValue = solution;
         }
     }
+    if (decimalButton.className === "decimal-button activated") {
+        decimalButton.classList.remove("activated");
+    };
     num1 = displayValue;
     switch (e.target.textContent) {
         case "+":
@@ -141,6 +147,9 @@ function selectEquals() {
         displayValue = solution;
     } else {
         equalsButton.classList.add("activated");
+        if (decimalButton.className === "decimal-button activated") {
+            decimalButton.classList.remove("activated");
+        };
         num2 = displayValue;
         expression.secondNumber = num2;
         const displayText = document.querySelector(".display-text");
@@ -162,12 +171,40 @@ function selectAC() {
     displayNumberArray = [];
     expression = {};
     displayValue = 0;
-    for (const btn of operatorButtons) {
+    const buttons = document.querySelectorAll("button");
+    for (const btn of buttons) {
         btn.classList.remove("activated");
-    };
-    equalsButton.classList.remove("activated");
+    }; 
     const displayText = document.querySelector(".display-text");
     displayText.textContent = "0";
 }
 
 acButton.addEventListener("click", selectAC);
+
+const decimalButton = document.querySelector(".decimal-button");
+
+function selectDecimal() {
+    const displayText = document.querySelector(".display-text");
+    let operatorButtonsArray = Array.from(operatorButtons);
+    let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
+    if (decimalButton.className === "decimal-button activated") {
+        return;
+    } else if (displayText.textContent === "0" || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
+        for (const btn of operatorButtons) {
+            btn.classList.remove("activated");
+        };
+        equalsButton.classList.remove("activated");
+        decimalButton.classList.add("activated");
+        displayNumberArray = ["0", "."];
+        displayText.textContent = "0.";
+        displayValue = 0;
+    } else {
+        decimalButton.classList.add("activated");
+        displayNumberArray.push(".");
+        let displayNumberString = displayNumberArray.join("");
+        displayText.textContent = displayNumberString;
+        displayValue = Number(displayNumberString);
+    }
+}
+
+decimalButton.addEventListener("click", selectDecimal);
