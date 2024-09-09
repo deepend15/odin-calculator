@@ -220,7 +220,7 @@ function selectBackspace() {
         displayNumberArray = [];
         displayText.textContent = "0";
         displayValue = 0;
-    } else if (displayNumberArray[displayNumberArray.length - 1] === ".") {
+    } else if (displayNumberArray[displayNumberArray.length - 1] === "." && displayNumberArray[0] !== "-") {
         if (displayNumberArray[0] === "0") {
             decimalButton.classList.remove("activated");
             displayNumberArray = [];
@@ -229,6 +229,18 @@ function selectBackspace() {
         } else {
             displayNumberArray.pop();
             decimalButton.classList.remove("activated");
+            let displayNumberString = displayNumberArray.join("");
+            displayText.textContent = displayNumberString;
+            displayValue = Number(displayNumberString);
+        }
+    } else if (displayNumberArray[0] === "-") {
+        if (displayNumberArray.length === 2 || (displayNumberArray[1] === "0" && displayNumberArray[displayNumberArray.length - 1] === ".")) {
+            decimalButton.classList.remove("activated");
+            displayNumberArray = [];
+            displayText.textContent = "0";
+            displayValue = 0;
+        } else {
+            displayNumberArray.pop();
             let displayNumberString = displayNumberArray.join("");
             displayText.textContent = displayNumberString;
             displayValue = Number(displayNumberString);
@@ -242,3 +254,26 @@ function selectBackspace() {
 }
 
 backspaceButton.addEventListener("click", selectBackspace);
+
+const plusMinusButton = document.querySelector(".plus-minus-button");
+
+function selectPlusMinus() {
+    const displayText = document.querySelector(".display-text");
+    let operatorButtonsArray = Array.from(operatorButtons);
+    let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
+    if (displayValue === 0 || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
+        return;
+    } else if (displayNumberArray[0] !== "-") {
+        displayNumberArray.unshift("-");
+        let displayNumberString = displayNumberArray.join("");
+        displayText.textContent = displayNumberString;
+        displayValue = Number(displayNumberString);
+    } else if (displayNumberArray[0] === "-") {
+        displayNumberArray.shift();
+        let displayNumberString = displayNumberArray.join("");
+        displayText.textContent = displayNumberString;
+        displayValue = Number(displayNumberString);
+    }
+}
+
+plusMinusButton.addEventListener("click", selectPlusMinus);
