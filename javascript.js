@@ -59,7 +59,7 @@ let expression = {};
 
 function selectNumber(e) {
     const displayText = document.querySelector(".display-text");
-    let operatorButtonsArray = Array.from(operatorButtons);
+    const operatorButtonsArray = Array.from(operatorButtons);
     let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
     if (displayText.textContent === "0" && e.target.textContent === "0") {
         return;
@@ -168,11 +168,14 @@ equalsButton.addEventListener("click", selectEquals);
 
 function selectDecimal() {
     const displayText = document.querySelector(".display-text");
-    let operatorButtonsArray = Array.from(operatorButtons);
+    const operatorButtonsArray = Array.from(operatorButtons);
     let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
     if (decimalButton.className === "decimal-button activated") {
         return;
     } else if (displayText.textContent === "0" || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
+        if (equalsButton.className === "equals-button activated") {
+            expression = {};
+        };
         for (const btn of operatorButtons) {
             btn.classList.remove("activated");
         };
@@ -212,7 +215,7 @@ const backspaceButton = document.querySelector(".backspace-button");
 
 function selectBackspace() {
     const displayText = document.querySelector(".display-text");
-    let operatorButtonsArray = Array.from(operatorButtons);
+    const operatorButtonsArray = Array.from(operatorButtons);
     let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
     if (displayText.textContent === "0" || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
         return;
@@ -259,7 +262,7 @@ const plusMinusButton = document.querySelector(".plus-minus-button");
 
 function selectPlusMinus() {
     const displayText = document.querySelector(".display-text");
-    let operatorButtonsArray = Array.from(operatorButtons);
+    const operatorButtonsArray = Array.from(operatorButtons);
     let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
     if (displayValue === 0 || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
         return;
