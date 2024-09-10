@@ -53,17 +53,26 @@ const operatorButtons = document.querySelectorAll(".operator-button");
 const equalsButton = document.querySelector(".equals-button");
 const decimalButton = document.querySelector(".decimal-button");
 
+const operatorButtonsArray = Array.from(operatorButtons);
+
+function operatorActivated(arr) {
+    let activatedOperators = arr.filter(btn => btn.className === "operator-button activated");
+    if (activatedOperators[0] !== undefined) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 let displayNumberArray = [];
 let displayValue = 0;
 let expression = {};
 
 function selectNumber(e) {
     const displayText = document.querySelector(".display-text");
-    const operatorButtonsArray = Array.from(operatorButtons);
-    let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
     if (displayText.textContent === "0" && e.target.textContent === "0") {
         return;
-    } else if (activatedOperators[0] !== undefined) {
+    } else if (operatorActivated(operatorButtonsArray)) {
         for (const btn of operatorButtons) {
             btn.classList.remove("activated");
         };
@@ -168,11 +177,9 @@ equalsButton.addEventListener("click", selectEquals);
 
 function selectDecimal() {
     const displayText = document.querySelector(".display-text");
-    const operatorButtonsArray = Array.from(operatorButtons);
-    let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
     if (decimalButton.className === "decimal-button activated") {
         return;
-    } else if (displayText.textContent === "0" || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
+    } else if (displayText.textContent === "0" || operatorActivated(operatorButtonsArray) || equalsButton.className === "equals-button activated") {
         if (equalsButton.className === "equals-button activated") {
             expression = {};
         };
@@ -215,9 +222,7 @@ const backspaceButton = document.querySelector(".backspace-button");
 
 function selectBackspace() {
     const displayText = document.querySelector(".display-text");
-    const operatorButtonsArray = Array.from(operatorButtons);
-    let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
-    if (displayText.textContent === "0" || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
+    if (displayText.textContent === "0" || operatorActivated(operatorButtonsArray) || equalsButton.className === "equals-button activated") {
         return;
     } else if (displayNumberArray.length === 1) {
         displayNumberArray = [];
@@ -262,9 +267,7 @@ const plusMinusButton = document.querySelector(".plus-minus-button");
 
 function selectPlusMinus() {
     const displayText = document.querySelector(".display-text");
-    const operatorButtonsArray = Array.from(operatorButtons);
-    let activatedOperators = operatorButtonsArray.filter(btn => btn.className === "operator-button activated");
-    if (displayValue === 0 || activatedOperators[0] !== undefined || equalsButton.className === "equals-button activated") {
+    if (displayValue === 0 || operatorActivated(operatorButtonsArray) || equalsButton.className === "equals-button activated") {
         return;
     } else if (displayNumberArray[0] !== "-") {
         displayNumberArray.unshift("-");
