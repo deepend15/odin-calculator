@@ -47,18 +47,9 @@ body {
     gap: 8px;
 }
 
-.first-line,
 .line {
     flex: 1;
     display: flex;
-}
-
-.first-line {
-    justify-content: flex-end;
-    gap: 7.067px;
-}
-
-.line {
     justify-content: space-between;
 }
 

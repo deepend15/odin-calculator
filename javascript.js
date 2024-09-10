@@ -89,6 +89,13 @@ function selectNumber(e) {
         let displayNumberString = displayNumberArray.join("");
         displayText.textContent = displayNumberString;
         displayValue = Number(displayNumberString);
+    } else if (percentButton.className === "percent-button activated") {
+        percentButton.classList.remove("activated");
+        displayNumberArray = [];
+        displayNumberArray.push(e.target.textContent);
+        let displayNumberString = displayNumberArray.join("");
+        displayText.textContent = displayNumberString;
+        displayValue = Number(displayNumberString);
     } else {
         displayNumberArray.push(e.target.textContent);
         let displayNumberString = displayNumberArray.join("");
@@ -108,6 +115,9 @@ function selectOperator(e) {
         if (decimalButton.className === "decimal-button activated") {
             decimalButton.classList.remove("activated");
         };
+        if (percentButton.className === "percent-button activated") {
+            percentButton.classList.remove("activated");
+        };
         num2 = displayValue;
         expression.secondNumber = num2;
         const displayText = document.querySelector(".display-text");
@@ -121,6 +131,9 @@ function selectOperator(e) {
     }
     if (decimalButton.className === "decimal-button activated") {
         decimalButton.classList.remove("activated");
+    };
+    if (percentButton.className === "percent-button activated") {
+            percentButton.classList.remove("activated");
     };
     num1 = displayValue;
     switch (e.target.textContent) {
@@ -160,6 +173,9 @@ function selectEquals() {
         if (decimalButton.className === "decimal-button activated") {
             decimalButton.classList.remove("activated");
         };
+        if (percentButton.className === "percent-button activated") {
+            percentButton.classList.remove("activated");
+        };
         num2 = displayValue;
         expression.secondNumber = num2;
         const displayText = document.querySelector(".display-text");
@@ -179,7 +195,7 @@ function selectDecimal() {
     const displayText = document.querySelector(".display-text");
     if (decimalButton.className === "decimal-button activated") {
         return;
-    } else if (displayText.textContent === "0" || operatorActivated(operatorButtonsArray) || equalsButton.className === "equals-button activated") {
+    } else if (displayText.textContent === "0" || operatorActivated(operatorButtonsArray) || equalsButton.className === "equals-button activated" || percentButton.className === "percent-button activated") {
         if (equalsButton.className === "equals-button activated") {
             expression = {};
         };
@@ -187,6 +203,7 @@ function selectDecimal() {
             btn.classList.remove("activated");
         };
         equalsButton.classList.remove("activated");
+        percentButton.classList.remove("activated");
         decimalButton.classList.add("activated");
         displayNumberArray = ["0", "."];
         displayText.textContent = "0.";
@@ -222,6 +239,9 @@ const backspaceButton = document.querySelector(".backspace-button");
 
 function selectBackspace() {
     const displayText = document.querySelector(".display-text");
+    if (percentButton.className === "percent-button activated") {
+        percentButton.classList.remove("activated");
+    };
     if (displayText.textContent === "0" || operatorActivated(operatorButtonsArray) || equalsButton.className === "equals-button activated") {
         return;
     } else if (displayNumberArray.length === 1) {
@@ -283,3 +303,36 @@ function selectPlusMinus() {
 }
 
 plusMinusButton.addEventListener("click", selectPlusMinus);
+
+const percentButton = document.querySelector(".percent-button");
+
+function selectPercent() {
+    const displayText = document.querySelector(".display-text");
+    if (decimalButton.className === "decimal-button activated") {
+        decimalButton.classList.remove("activated");
+    };
+    if (equalsButton.className === "equals-button activated") {
+        equalsButton.classList.remove("activated");
+        expression = {};
+    } else if (operatorActivated(operatorButtonsArray)) {
+        for (const btn of operatorButtons) {
+            btn.classList.remove("activated");
+        };
+    };
+    if (expression.firstNumber === undefined) {
+        percentButton.classList.add("activated");
+        let percentage = displayValue / 100;
+        displayText.textContent = percentage.toString();
+        displayNumberArray = percentage.toString().split("");
+        displayValue = percentage;
+    } else {
+        percentButton.classList.add("activated");
+        let percentage = displayValue / 100;
+        let firstNumberPercentage = expression.firstNumber * percentage;
+        displayText.textContent = firstNumberPercentage.toString();
+        displayNumberArray = percentage.toString().split("");
+        displayValue = firstNumberPercentage;
+    }
+}
+
+percentButton.addEventListener("click", selectPercent);
