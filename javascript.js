@@ -341,3 +341,84 @@ function selectPlusMinus() {
 }
 
 plusMinusButton.addEventListener("click", selectPlusMinus);
+
+let clickEvent = new MouseEvent("click");
+
+window.addEventListener("keypress", (e) => {
+    switch(e.key) {
+        case 'Enter':
+            equalsButton.dispatchEvent(clickEvent);
+            e.preventDefault();
+            break;
+        case '=':
+            equalsButton.dispatchEvent(clickEvent);
+            break;
+        case '.':
+            decimalButton.dispatchEvent(clickEvent);
+            break;
+        case '%':
+            percentButton.dispatchEvent(clickEvent);
+            break;
+        case 'c':
+            acButton.dispatchEvent(clickEvent);
+            break;
+        case 'C':
+            acButton.dispatchEvent(clickEvent);
+            break;
+        case '+':
+            let additionOperatorArray = operatorButtonsArray.filter(
+                btn => btn.textContent === "+"
+            );
+            let additionOperator = additionOperatorArray[0];
+            additionOperator.dispatchEvent(clickEvent);
+            break;
+        case '-':
+            let subtractionOperatorArray = operatorButtonsArray.filter(
+                btn => btn.textContent === "−"
+            );
+            let subtractionOperator = subtractionOperatorArray[0];
+            subtractionOperator.dispatchEvent(clickEvent);
+            break;
+        case '*':
+            let multiplicationOperatorArray = operatorButtonsArray.filter(
+                btn => btn.textContent === "×"
+            );
+            let multiplicationOperator = multiplicationOperatorArray[0];
+            multiplicationOperator.dispatchEvent(clickEvent);
+            break;
+        case '/':
+            let divisionOperatorArray = operatorButtonsArray.filter(
+                btn => btn.textContent === "÷"
+            );
+            let divisionOperator = divisionOperatorArray[0];
+            divisionOperator.dispatchEvent(clickEvent);
+            break;  
+    };
+    let numberOptions = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    function isNumber(key) {
+        if (numberOptions.includes(key)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    if (isNumber(e.key)) {
+        const numberButtonsArray = Array.from(numberButtons);
+        let numberButtonArray = numberButtonsArray.filter(
+            btn => btn.textContent === e.key
+        );
+        let numberButton = numberButtonArray[0];
+        numberButton.dispatchEvent(clickEvent);
+    };
+})
+
+window.addEventListener("keydown", (e) => {
+    switch(e.key) {
+        case 'Backspace':
+            backspaceButton.dispatchEvent(clickEvent);
+            break;
+        case 'Delete':
+            backspaceButton.dispatchEvent(clickEvent);
+            break;
+    }
+})
