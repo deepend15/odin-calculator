@@ -404,11 +404,11 @@ window.addEventListener("keypress", (e) => {
     }
     if (isNumber(e.key)) {
         const numberButtonsArray = Array.from(numberButtons);
-        let numberButtonArray = numberButtonsArray.filter(
+        let keyedNumberArray = numberButtonsArray.filter(
             btn => btn.textContent === e.key
         );
-        let numberButton = numberButtonArray[0];
-        numberButton.dispatchEvent(clickEvent);
+        let keyedNumber = keyedNumberArray[0];
+        keyedNumber.dispatchEvent(clickEvent);
     };
 })
 
