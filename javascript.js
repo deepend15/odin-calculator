@@ -71,8 +71,10 @@ let displayNumberArray = [];
 let displayValue = 0;
 let expression = {};
 
+const displayText = document.querySelector(".display-text");
+const smallTextContainer = document.querySelector(".display-small-text-container");
+
 function selectNumber(e) {
-    const displayText = document.querySelector(".display-text");
     if (displayText.textContent === "0" && e.target.textContent === "0") {
         return;
     } else {
@@ -82,6 +84,7 @@ function selectNumber(e) {
         {
             if (equalsButton.className === "equals-button activated") {
                 expression = {};
+                smallTextContainer.textContent = "";
             };
             for (const btn of operatorButtons) {
                 btn.classList.remove("activated");
@@ -111,9 +114,8 @@ function selectOperator(e) {
         percentButton.classList.remove("activated");
         num2 = displayValue;
         expression.secondNumber = num2;
-        const displayText = document.querySelector(".display-text");
         if (expression.operator === "/" && expression.secondNumber === 0) {
-            displayText.textContent = "Err: cannot divide by 0";
+            displayText.textContent = "plz dnt";
         } else {
             let solution = operate(
                 expression.firstNumber, 
@@ -144,6 +146,7 @@ function selectOperator(e) {
     e.target.classList.add("activated");
     expression.firstNumber = num1;
     expression.operator = operator;
+    smallTextContainer.textContent = `${expression.firstNumber} ${e.target.textContent}`;
 }
 
 operatorButtons.forEach((button) => {
@@ -153,16 +156,19 @@ operatorButtons.forEach((button) => {
 function selectEquals() {
     if (expression.firstNumber === undefined && 
         expression.secondNumber === undefined) {
-        return;
+        equalsButton.classList.add("activated");
+        smallTextContainer.textContent = `${displayValue} =`;
     } else if (equalsButton.className === "equals-button activated") {
         expression.firstNumber = displayValue;
-        const displayText = document.querySelector(".display-text");
         let solution = operate(
             expression.firstNumber, 
             expression.operator, 
             expression.secondNumber
         );
         displayText.textContent = solution.toString();
+        let smallTextArray = smallTextContainer.textContent.split(" ");
+        smallTextArray.splice(0, 1, `${expression.firstNumber}`);
+        smallTextContainer.textContent = smallTextArray.join(" ");
         displayValue = solution;
     } else {
         equalsButton.classList.add("activated");
@@ -170,9 +176,9 @@ function selectEquals() {
         percentButton.classList.remove("activated");
         num2 = displayValue;
         expression.secondNumber = num2;
-        const displayText = document.querySelector(".display-text");
         if (expression.operator === "/" && expression.secondNumber === 0) {
-            displayText.textContent = "Err: cannot divide by 0";
+            smallTextContainer.textContent = "";
+            displayText.textContent = "plz dnt";
         } else {
             let solution = operate(
                 expression.firstNumber, 
@@ -180,6 +186,9 @@ function selectEquals() {
                 expression.secondNumber
             );
             displayText.textContent = solution.toString();
+            let smallTextArray = smallTextContainer.textContent.split(" ");
+            smallTextArray.splice(smallTextArray.length, 0, `${expression.secondNumber}`, '=');
+            smallTextContainer.textContent = smallTextArray.join(" ");
             displayValue = solution;
         }
     }
@@ -188,7 +197,6 @@ function selectEquals() {
 equalsButton.addEventListener("click", selectEquals);
 
 function selectDecimal() {
-    const displayText = document.querySelector(".display-text");
     if (decimalButton.className === "decimal-button activated") {
         return;
     } else if (displayText.textContent === "0" || 
@@ -198,6 +206,7 @@ function selectDecimal() {
             {
                 if (equalsButton.className === "equals-button activated") {
                     expression = {};
+                    smallTextContainer.textContent = "";
                 };
                 for (const btn of operatorButtons) {
                     btn.classList.remove("activated");
@@ -220,7 +229,6 @@ function selectDecimal() {
 decimalButton.addEventListener("click", selectDecimal);
 
 function selectPercent() {
-    const displayText = document.querySelector(".display-text");
     if (equalsButton.className === "equals-button activated") {
         expression = {};
     };
@@ -257,8 +265,8 @@ function selectAC() {
     for (const btn of buttons) {
         btn.classList.remove("activated");
     }; 
-    const displayText = document.querySelector(".display-text");
     displayText.textContent = "0";
+    smallTextContainer.textContent = "";
 }
 
 acButton.addEventListener("click", selectAC);
@@ -266,7 +274,6 @@ acButton.addEventListener("click", selectAC);
 const backspaceButton = document.querySelector(".backspace-button");
 
 function selectBackspace() {
-    const displayText = document.querySelector(".display-text");
     percentButton.classList.remove("activated");
     if (displayText.textContent === "0" || 
         operatorActivated(operatorButtonsArray) || 
@@ -321,7 +328,6 @@ backspaceButton.addEventListener("click", selectBackspace);
 const plusMinusButton = document.querySelector(".plus-minus-button");
 
 function selectPlusMinus() {
-    const displayText = document.querySelector(".display-text");
     if (displayValue === 0 || 
         operatorActivated(operatorButtonsArray) || 
         equalsButton.className === "equals-button activated") 
