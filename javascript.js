@@ -24,7 +24,7 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    return roundNumber(num1 / num2, 15);
+    return roundNumber(num1 / num2, 12);
 }
 
 let num1;
